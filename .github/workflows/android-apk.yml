@@ -1,10 +1,9 @@
-name: Build Android APK
+name: Build Android Debug APK
 
 on:
   push:
     branches:
-      - main
-  pull_request:
+      - main # یا شاخه‌ای که بیشتر با آن کار می‌کنید
 
 jobs:
   build:
@@ -23,15 +22,13 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Build APK
+      # این خط APK Debug را می‌سازد
+      - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
+      # این بخش APK ساخته شده را به عنوان Artifact قابل دانلود در GitHub Actions ذخیره می‌کند
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v3
         with:
-          name: app-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
-           on:
-  release:
-    types: [published]
-
+          name: v2rayNG-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
